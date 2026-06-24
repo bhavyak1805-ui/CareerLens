@@ -48,34 +48,39 @@ def preprocess_image(img):
     h, w = img.shape[:2]
     if w < 640:
         scale = 640 / w
-        img   = cv2.resize(img, (int(w*scale), int(h*scale)), interpolation=cv2.INTER_CUBIC)
+        img = cv2.resize(img, (int(w*scale), int(h*scale)), interpolation=cv2.INTER_CUBIC)
     bgr = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
     lab = cv2.cvtColor(bgr, cv2.COLOR_BGR2LAB)
     l, a, b = cv2.split(lab)
     clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8,8))
-    lab   = cv2.merge((clahe.apply(l), a, b))
+    lab = cv2.merge((clahe.apply(l), a, b))
     return cv2.cvtColor(cv2.cvtColor(lab, cv2.COLOR_LAB2BGR), cv2.COLOR_BGR2RGB)
 
 def extract_embedding(img):
-    from deepface import DeepFace
     img = preprocess_image(img)
-    for backend in ["opencv","ssd","mtcnn","retinaface"]:
-        try:
-            r = DeepFace.represent(img_path=img, model_name="Facenet",
-                                   enforce_detection=True, detector_backend=backend)
-            return r[0]["embedding"], backend
-        except:
-            continue
-    try:
-        r = DeepFace.represent(img_path=img, model_name="Facenet",
-                               enforce_detection=False, detector_backend="opencv")
-        return r[0]["embedding"], "opencv(no-enforce)"
-    except Exception as e:
-        return None, str(e)
+    gray = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
+    
+    # Use OpenCV haar cascade (very fast, no model download needed)
+    face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
+    faces = face_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30))
+    
+    if len(faces) == 0:
+        return None, "No face detected"
+    
+    # Crop the face
+    x, y, w, h = faces[0]
+    face_crop = img[y:y+h, x:x+w]
+    face_resized = cv2.resize(face_crop, (128, 128))
+    
+    # Create embedding from pixel values (simple but fast)
+    embedding = face_resized.flatten().astype(np.float32)
+    embedding = embedding / np.linalg.norm(embedding)
+    
+    return embedding.tolist(), "opencv"
 
 def cosine_sim(a, b):
     a, b = np.array(a), np.array(b)
     return float(np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b) + 1e-9))
 
-def faces_match(e1, e2, threshold=0.70):
+def faces_match(e1, e2, threshold=0.92):
     return cosine_sim(e1, e2) >= threshold
