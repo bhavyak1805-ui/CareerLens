@@ -82,5 +82,5 @@ def cosine_sim(a, b):
     a, b = np.array(a), np.array(b)
     return float(np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b) + 1e-9))
 
-def faces_match(e1, e2, threshold=0.92):
+def faces_match(e1, e2, threshold=0.75):
     return cosine_sim(e1, e2) >= threshold
