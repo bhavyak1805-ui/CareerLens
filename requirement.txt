@@ -1,0 +1,13 @@
+pip install numpy
+pip install Pillow
+pip install opencv-python
+pip install scikit-learn scipy h5py
+pip install tensorflow==2.15.0
+pip install tf-keras keras
+pip install deepface
+pip install retina-face mtcnn
+pip install streamlit
+pip install mysql-connector-python
+pip install bcrypt
+pip install anthropic
+pip install flask flask-cors gdown fire gunicorn
