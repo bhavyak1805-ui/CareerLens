@@ -4,9 +4,6 @@ mysql-connector-python
 bcrypt
 groq
 anthropic
-deepface
-retina-face
-mtcnn
 opencv-python
 Pillow
 plotly
@@ -15,5 +12,4 @@ scikit-learn
 scipy
 pandas
 requests
-tensorflow==2.16.1
-tf-keras
+
