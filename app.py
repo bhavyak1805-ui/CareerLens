@@ -177,7 +177,7 @@ with auth_left:
             if not r_email: errors.append("Email required")
             if not r_pass:  errors.append("Password required")
             if r_pass != r_pass2: errors.append("Passwords do not match")
-            if r_auth in ("face_id","both") and not st.session_state.reg_embedding:
+            if r_auth in ("face_id","both") and not st.session_state.get("reg_embedding"):
                 errors.append("Capture a face photo for Face ID")
             if errors:
                 for e in errors: st.error(f"❌ {e}")
