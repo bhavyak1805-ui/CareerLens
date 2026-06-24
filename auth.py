@@ -70,7 +70,7 @@ def extract_embedding(img):
     # Crop the face
     x, y, w, h = faces[0]
     face_crop = img[y:y+h, x:x+w]
-    face_resized = cv2.resize(face_crop, (128, 128))
+    face_resized = cv2.resize(face_crop, (32, 32))
     
     # Create embedding from pixel values (simple but fast)
     embedding = face_resized.flatten().astype(np.float32)
