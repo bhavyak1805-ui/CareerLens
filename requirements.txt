@@ -1,44 +1,17 @@
-# Web framework
 streamlit
 streamlit-option-menu
-
-# Database
 mysql-connector-python
-
-# Auth & security
 bcrypt
-
-# AI / LLM
 groq
 anthropic
 deepface
 retina-face
 mtcnn
-
-# Computer vision & image processing
 opencv-python
 Pillow
 numpy
-
-# ML / NLP
 scikit-learn
 scipy
-tensorflow==2.15.0
-tf-keras
-keras
-h5py
-
-# Data & visualization
 pandas
-plotly
-
-# Networking & utils
 requests
-firebase-admin
-
-# Web server (for deployment)
-flask
-flask-cors
-gunicorn
-gdown
-fire
+tensorflow==2.16.1
