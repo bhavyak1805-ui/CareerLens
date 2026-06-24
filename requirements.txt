@@ -9,6 +9,7 @@ retina-face
 mtcnn
 opencv-python
 Pillow
+plotly
 numpy
 scikit-learn
 scipy
