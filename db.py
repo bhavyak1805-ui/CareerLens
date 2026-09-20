@@ -5,11 +5,11 @@ import streamlit as st
 
 def get_conn():
     return mysql.connector.connect(
-        host=os.environ.get("DB_HOST"),
+        host=os.environ.get("DB_HOST", "7ncl6o.h.filess.io"),
         port=int(os.environ.get("DB_PORT", 3306)),
-        user=os.environ.get("DB_USER"),
-        password=os.environ.get("DB_PASSWORD"),
-        database=os.environ.get("DB_NAME"),
+        user=os.environ.get("DB_USER", "faceauth_notedbread"),
+        password=os.environ.get("DB_PASSWORD", "59a76cc5c4cff87006a82436984673861947f7bd"),
+        database=os.environ.get("DB_NAME", "faceauth_notedbread"),
     )
 
 
