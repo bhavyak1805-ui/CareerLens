@@ -9,7 +9,7 @@ from mysql.connector import Error as MySQLError
 from db  import get_conn
 from nav import back_to_dashboard
 
-GROQ_MODEL = "qwen/qwen3.6-27b"
+GROQ_MODEL = "qwen3-6-27b"
 
 SYSTEM_PROMPT = """You are "Aria", a friendly campus career-services assistant inside the
 Futureconx student platform. Your job: recommend jobs, internships, projects, and career
